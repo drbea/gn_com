@@ -1,0 +1,104 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>GN ECOM-{% block title %}{% endblock %}</title>
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  </head>
+  <body class="min-vh-100"">
+      {% block navbar %}
+      <nav class="navbar navbar-expand-lg bg-body-tertiary">
+          <div class="container-fluid">
+            <a class="navbar-brand" href="#">GN COM</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+              <ul class="navbar-nav">
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="#">Accueille</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'produits:index' %}">Produits</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Panier</a>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Categories
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Action</a></li>
+                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                  </ul>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Contact</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      {% endblock %}
+      <!-- Main content -->
+      {% block content %}
+      {% endblock %}
+
+      {% block footer %}
+      <footer class="bg-dark text-white pt-5 pb-4">
+          <div class="container">
+              <div class="row">
+
+                  <div class="col-md-5 col-lg-4 mb-4">
+                      <h5 class="text-uppercase mb-4">Abonnez-vous à notre newsletter</h5>
+                      <p>Recevez nos dernières actualités et offres spéciales.</p>
+
+                      <form action="#votre_url_de_traitement" method="POST" class="d-flex flex-column flex-sm-row">
+                          <div class="input-group mb-3 mb-sm-0 me-sm-2">
+                              <input type="email" class="form-control" placeholder="Votre adresse e-mail" aria-label="Adresse e-mail de la newsletter" required>
+                          </div>
+                          <button class="btn btn-primary" type="submit">S'inscrire</button>
+                      </form>
+                      </div>
+
+                  <div class="col-md-3 col-lg-2 mx-auto mb-4">
+                      <h5 class="text-uppercase mb-4">Navigation</h5>
+                      <ul class="list-unstyled">
+                          <li class="mb-2"><a href="#accueil" class="text-white text-decoration-none">Accueil</a></li>
+                          <li class="mb-2"><a href="#services" class="text-white text-decoration-none">Services</a></li>
+                          <li class="mb-2"><a href="#apropos" class="text-white text-decoration-none">À propos</a></li>
+                          <li class="mb-2"><a href="#contact" class="text-white text-decoration-none">Contact</a></li>
+                      </ul>
+                  </div>
+
+                  <div class="col-md-4 col-lg-3 mx-auto mb-4">
+                      <h5 class="text-uppercase mb-4">Légal & Contact</h5>
+                      <ul class="list-unstyled">
+                          <li class="mb-2"><a href="#mentions" class="text-white text-decoration-none">Mentions Légales</a></li>
+                          <li class="mb-2"><a href="#politique" class="text-white text-decoration-none">Politique de Confidentialité</a></li>
+                          <li class="mb-2">123 Rue de l'Exemple, 75000 Paris</li>
+                          <li class="mb-2">contact@gn224ecom.gn</li>
+                      </ul>
+                  </div>
+              </div>
+
+              <hr class="my-3 border-light">
+
+              <div class="row">
+                  <div class="col-12 text-center">
+                      <p class="mb-0 text-muted small">&copy; <span id="currentYear"></span> GN E-COM. Tous droits réservés.</p>
+                  </div>
+              </div>
+          </div>
+      </footer>
+      <script>
+          document.getElementById('currentYear').textContent = new Date().getFullYear();
+      </script>
+      {% endblock %}
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+  </body>
+</html>
