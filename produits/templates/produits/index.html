@@ -2,7 +2,105 @@
 {% load static %}
 {% block title %}Liste des Produits{% endblock %}
 {% block content %}
+<style media="screen">
+    .product-banner {
+    /* 1. Image de fond */
+    background-image: url('https://m.atcdn.co.uk/vms/media/710ea559575e43cd84957aaeefacfd82.jpg'); /* REMPLACEZ CE CHEMIN */
+    background-size: cover; /* L'image couvre toute la zone */
+    background-position: center; /* Centre l'image */
+    height: 300px; /* Hauteur de la bannière, ajustez si nécessaire */
+
+    /* 2. Flexbox pour centrer le contenu */
+    display: flex;
+    justify-content: center; /* Centrage horizontal */
+    align-items: center; /* Centrage vertical */
+
+    /* 3. Effet d'ombrage pour une meilleure lisibilité (optionnel) */
+    box-shadow: inset 0 0 0 2000px rgba(0, 0, 0, 0.4); /* Assombrit légèrement l'image pour que le texte blanc ressorte */
+}
+
+.banner-content {
+    /* Style du contenu textuel */
+    text-align: center;
+    color: white; /* Couleur du texte, mettez une couleur qui contraste avec l'image */
+    padding: 20px;
+}
+
+.banner-content h1 {
+    font-size: 2.5em; /* Taille du titre */
+    margin-bottom: 10px;
+    /* Ombre pour le texte (aide à la lisibilité sur une image chargée) */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+.banner-content p {
+    font-size: 1.2em; /* Taille de la description */
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+}
+
+/* Style optionnel pour le bouton */
+.cta-button {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 20px;
+    background-color: #ff6600; /* Couleur d'action */
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+}
+</style>
     <div class="">
-        page produits
+        <div class="product-banner">
+            <div class="banner-content">
+                <h1>Découvrez notre collection de produits</h1>
+                <p>Parcourez notre sélection unique et trouvez ce dont vous avez besoin.</p>
+            </div>
+        </div>
     </div>
+
+
+    <!-- Liste Produits -->
+    <div class="titre-produit">
+        <h1>Nos Produits</h1>
+    </div>
+    <div class="produits py-5">
+        <!-- "articles": articles,
+        "articles_recent": articles_recent
+    } -->
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% if articles %}
+            {% for article in articles %}
+              <div class="col">
+                <div class="card h-100">
+
+                    {% if article.images.all %}
+                        {% with image=article.images.all.0 %}
+                            {% if image.image_file %}
+                                <img src="{{ image.image_file.url }}" alt="{{ article.nom }}" width="200">
+                            {% else %}
+                                <p>Aucune image disponible</p>
+                            {% endif %}
+                        {% endwith %}
+                    {% else %}
+                        <p>Aucune image</p>
+                    {% endif %}
+
+                  <div class="card-body">
+                    <h5 class="card-title">{{ article.nom }}</h5>
+                    <p class="card-text">{{ article.description }}</p>
+                  </div>
+                </div>
+              </div>
+             {% endfor %}
+
+         {% else %}
+         <div class="no-article">
+             <h3>Pas de produit dispo</h3>
+         </div>
+        {% endif %}
+        </div>
+
+    </div>
+
 {% endblock %}

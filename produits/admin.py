@@ -1,22 +1,30 @@
 from django.contrib import admin
 
-from . models import Categorie, Images, Produit, Article
+from . models import Categorie, Produit, Article, ImagesArticle# ImagesProduit, ,
 
 
+@admin.register(Categorie)
 class CategorieAdmin(admin.ModelAdmin):
  list_display = ("nom", "description")
 
-class ImagesInline(admin.TabularInline):
-    model = Comment
-    extra = 1 # Show one empty comment form by default
+
+# class ImagesProduitInline(admin.TabularInline):
+#     model = ImagesProduit
+#     fk_name = 'produit' # Spécifie la clé étrangère dans le modèle Images
+#     extra = 1
+
+class ImagesArticleInline(admin.TabularInline):
+    model = ImagesArticle
+    fk_name = 'article' # Spécifie la clé étrangère dans le modèle Images
+    extra = 1
 
 
-
+@admin.register(Produit)
 class ProduitAdmin(admin.ModelAdmin):
     list_display = ("nom", "description", "categorie")
-    inlines = [CommentInline]
+    # inlines = [ImagesProduitInline]
 
-
+@admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
     list_display = ("nom", "prix", "date_added", "marque", "couleur",)
-    inlines = [CommentInline]
+    inlines = [ImagesArticleInline]
