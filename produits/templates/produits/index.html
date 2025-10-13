@@ -51,6 +51,13 @@
     border-radius: 5px;
     font-weight: bold;
 }
+
+/* .card {
+    height: 450px;
+}
+.card img {
+    height: 200px;
+} */
 </style>
     <div class="">
         <div class="product-banner">
@@ -60,7 +67,6 @@
             </div>
         </div>
     </div>
-
 
     <!-- Liste Produits -->
     <div class="titre-produit">
@@ -72,7 +78,8 @@
         {% if articles %}
             {% for article in articles %}
               <div class="col">
-                <div class="card h-100">
+                <a href="{% url 'produits:detail' article.id %}" class="nav-link">
+                    <div class="card h-100">
 
                     {% if article.images.all %}
                         {% with image=article.images.all.0 %}
@@ -88,9 +95,10 @@
 
                   <div class="card-body">
                     <h5 class="card-title">{{ article.nom }}</h5>
-                    <p class="card-text">{{ article.description }}</p>
+                    <p class="card-text">{{ article.description|truncatechars:150 }}</p>
                   </div>
                 </div>
+                </a>
               </div>
              {% endfor %}
 
@@ -102,5 +110,8 @@
         </div>
 
     </div>
+
+
+
 
 {% endblock %}

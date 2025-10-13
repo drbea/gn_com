@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% block title %}À Propos et Contact{% endblock %}
+{% block content %}
+
+    <style>
+        /* Style personnalisé pour améliorer l'espacement et la lecture */
+        body {
+            background-color: #f8f9fa; 
+        }
+        .main-content {
+            padding: 40px 0; /* Espacement autour des deux colonnes */
+        }
+        .col-section {
+            padding: 30px; /* Padding interne pour chaque colonne */
+            height: 100%; /* S'assure que la colonne prend toute la hauteur disponible */
+        }
+    </style>
+
+
+    <div class="container main-content">
+        <div class="row g-4"> <div id="a-propos" class="col-md-6">
+                <div class="card shadow-sm col-section bg-light h-100">
+                    <h1 class="display-6 fw-bold text-primary mb-4">À Propos de Nous 💡</h1>
+                    
+                    <h2 class="h4">Notre Mission</h2>
+                    <p>
+                        Nous nous engageons à fournir des solutions innovantes et de haute qualité pour répondre aux besoins de nos clients. Notre réputation est bâtie sur l'excellence, l'intégrité et un service client irréprochable.
+                    </p>
+                    
+                    <h2 class="h4 mt-4">Nos Valeurs</h2>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-check-circle text-success me-2"></i> Innovation et Créativité</li>
+                        <li><i class="fas fa-check-circle text-success me-2"></i> Engagement envers la Qualité</li>
+                        <li><i class="fas fa-check-circle text-success me-2"></i> Transparence et Respect</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div id="contactez-nous" class="col-md-6">
+                 <div class="card shadow-sm col-section bg-white h-100">
+                    <h1 class="display-6 fw-bold text-success mb-4">Contactez-nous 📧</h1>
+                    
+                    <form action="#" method="POST">
+                        <div class="mb-3">
+                            <label for="nom" class="form-label">Nom</label>
+                            <input type="text" class="form-control" id="nom" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Adresse E-mail</label>
+                            <input type="email" class="form-control" id="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="message" class="form-label">Votre Message</label>
+                            <textarea class="form-control" id="message" rows="4" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-success w-100 mt-2">Envoyer le Message</button>
+                    </form>
+
+                    <hr class="my-4">
+                    
+                    <h4 class="h5">Informations Directes</h4>
+                    <p class="mb-0">
+                        <strong>E-mail :</strong> support@monsite.com<br>
+                        <strong>Téléphone :</strong> +33 1 23 45 67 89
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    {% endblock %}

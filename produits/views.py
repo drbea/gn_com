@@ -11,3 +11,14 @@ def index(request):
         "articles_recent": articles_recent
     }
     return render(request, "produits/index.html", context)
+
+
+def detail_article(request, id_produit):
+    article =  Article.objects.get(id = id_produit)
+    context = {
+        "article": article
+    }
+    return render(request, "produits/detail_article.html", context)
+
+def panier(request):
+    return render(request, "produits/panier.html")

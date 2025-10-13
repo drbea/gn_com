@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}Detail-{{ article.nom }} {% endblock %}
+{% block content %}
+
+    <div class="card mb-3 mx-auto" style="max-width: 90%; max-height: 950px;">
+  <div class="row g-0">
+    <div class="col-md-4">
+      <div id="articleImageCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
+        <div class="carousel-inner rounded-start">
+          
+        {% if article.images.all %}
+          {% for image in  article.images.all %}
+
+            <div class="carousel-item active" data-bs-interval="10000">
+            <img src="{{ image.image_file.url }}" class="d-block w-100" alt="...">
+            </div>
+          {% endfor %}
+        {% else %}
+            <h3>PAs d'image disponible</h3>
+        {% endif %}
+
+        </div>
+
+        <button class="carousel-control-prev" type="button" data-bs-target="#articleImageCarousel" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Précédent</span>
+        </button>
+        
+        <button class="carousel-control-next" type="button" data-bs-target="#articleImageCarousel" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Suivant</span>
+        </button>
+        
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#articleImageCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#articleImageCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#articleImageCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+
+      </div>
+      </div>
+    
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title" id="nom-produit">{{ article.nom  }}</h5>
+        <p class="card-text">
+                {{ article.description }}
+        </p>
+        <p class="card-text"><small class="text-body-secondary"> {{ article.date_added }}</small></p>
+        <p class="card-text"><small class="text-body-secondary" >Produit: {{ article.produit.nom }}</small></p>
+        <p class="card-text"><small class="text-body-secondary">Marque: {{ article.marque }}</small></p>
+        <p class="card-text"><small class="text-body-secondary">Couleur: {{ article.couleur }}</small></p>
+        <p class="card-text"><small class="text-body-secondary">Prix: <span id="prix-produit">{{ article.prix }} </span> GNF</small></p>
+      </div>
+      <p><button class="btn btn-success" id="btn-ajouter">Ajouter au panier</button></p>
+    </div>
+  </div>
+</div>
+
+
+<script>
+    let button = document.querySelector("btn-ajouter")
+    // var button1 = document.getElementById("btn-ajouter")
+    button.addEventListener("click", ()=>{
+        let  h5 = document.getElementById("nom-produit")
+        console.log(h5)
+
+
+        let nom_produit = document.getElementById("nom-produit").innerText
+        let prix_produit = document.getElementById("prix-produit").innerText
+        let message = "Nom: " + nom_produit + "Prix: " + prix_produit
+        // alert(message)
+        console.log(message)
+    })
+ </script>
+{% endblock %}
+
