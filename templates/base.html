@@ -24,7 +24,7 @@
                   <a class="nav-link" href="{% url 'produits:index' %}">Produits</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="{% url 'produits:panier' %}">Panier <span>0</span> </a>
+                  <a class="nav-link" href="{% url 'produits:panier' %}">Panier <span id="quantiteArticle">0</span> </a>
                 </li>
  
                 <li class="nav-item">
@@ -91,5 +91,17 @@
       </script>
       {% endblock %}
     <script src="{% static 'js/bootstrap.bundle.min.js' %}" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    {% block js  %}
+    <script>
+      let panier = JSON.parse(localStorage.getItem("panier")) || [];
+      let span = document.querySelector("#quantiteArticle")
+      console.log(span)
+
+      if (panier){
+        span.innerText = panier.length
+      }
+    </script>
+    {% endblock %}
+
   </body>
 </html>

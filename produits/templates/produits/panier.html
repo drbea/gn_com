@@ -14,15 +14,42 @@
     <th>Nom</th>
     <th>Prix</th>
     <th>Qte</th>
+    <th>action</th>
     <th>Total</th>
   </thead>
   <tbody>
+    <tr>
+      <td>Toyota R450</td>
+      <td>234543</td>
+      <td>12</td>
+      <td>
+        <span class="bg-success w-50 me-5">+</span>
+        <span class="bg-danger ms-2 ">-</span>
+      </td>
+      <td>234578976</td>
+
+    </tr>
 
   </tbody>
 </table>
  </div>
 
+<script>
+  let panier = JSON.parse(localStorage.getItem("panier"))
 
+  console.log("contenu panier:" + panier)
+</script>
 
 {% endblock %}
 
+    {% block js  %}
+    <script>
+      panier = JSON.parse(localStorage.getItem("panier")) || [];
+      let span = document.querySelector("#quantiteArticle")
+      console.log(span)
+
+      if (panier){
+        span.innerText = panier.length
+      }
+    </script>
+    {% endblock %}

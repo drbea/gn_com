@@ -62,19 +62,63 @@
 
 
 <script>
-    let button = document.querySelector("btn-ajouter")
-    // var button1 = document.getElementById("btn-ajouter")
-    button.addEventListener("click", ()=>{
-        let  h5 = document.getElementById("nom-produit")
-        console.log(h5)
+    let button = document.querySelector("#btn-ajouter");
 
+    // 1. recuperer ou initialiser le panier depuis le LocalStorage
+    let panier = JSON.parse(localStorage.getItem("panier")) || [];
+    
+    // Afficher le panier initial
+    console.log("Initial Panier:", panier);
 
-        let nom_produit = document.getElementById("nom-produit").innerText
-        let prix_produit = document.getElementById("prix-produit").innerText
-        let message = "Nom: " + nom_produit + "Prix: " + prix_produit
-        // alert(message)
-        console.log(message)
-    })
- </script>
+    button.addEventListener("click", () => {
+        
+        // Recuperation des information du produit 
+        let nom_produit = document.getElementById("nom-produit").innerText.trim();
+        let prix_produit = document.getElementById("prix-produit").innerText.trim();
+        
+        // Creer un nouvel article
+        let newArticle = {
+            nom: nom_produit,
+            // convertir le prix en float
+            prix: parseFloat(prix_produit), 
+            quantite: 1
+        };
+
+        // 2. verifier si l'rticle est deja dans le panier avec la fonction find en js
+        // on compare l'article avec les produit qui qui ont le meme nom
+        let existingArticle = panier.find(item => item.nom === newArticle.nom);
+
+        if (existingArticle) {
+            // 3.augmenter la quantte si l'article existe deja
+            existingArticle.quantite += 1;
+            console.log(`Quantité de ${newArticle.nom} augmentée. Nouvelle quantité: ${existingArticle.quantite}`);
+        } else {
+            // 4. si l'article n'existe pas ajouter un nouvel article au panier
+            panier.push(newArticle);
+            console.log(`${newArticle.nom} ajouté au panier.`);
+        }
+
+        // 5. enregistrer le panier dans le localStorage
+        localStorage.setItem("panier", JSON.stringify(panier));
+
+        console.log("Panier mis à jour:", panier);
+        
+        // informer que l'article a ete ajoute au panier
+        alert(`${newArticle.nom} a été ajouté au panier !`);
+    });
+
+    console.log("Script loaded. Current panier state:", panier);
+</script>
+    {% block js  %}
+    <script>
+      panier = JSON.parse(localStorage.getItem("panier")) || [];
+      let span = document.querySelector("#quantiteArticle")
+      console.log(span)
+
+      if (panier){
+        span.innerText = panier.length
+      }
+    </script>
+    {% endblock %}
 {% endblock %}
 
