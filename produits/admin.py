@@ -1,11 +1,21 @@
 from django.contrib import admin
 
-from . models import Categorie, Produit, Article, ImagesArticle# ImagesProduit, ,
+from . models import Categorie, Produit, Article, ImagesArticle, ArticleCommande,Commande# ImagesProduit, ,
 
 
 @admin.register(Categorie)
 class CategorieAdmin(admin.ModelAdmin):
  list_display = ("nom", "description")
+
+
+@admin.register(ArticleCommande)
+class ArticleCommandeAdmin(admin.ModelAdmin):
+ list_display = ("article", "prix_unitaire")
+
+
+@admin.register(Commande)
+class CommandeAdmin(admin.ModelAdmin):
+ list_display = ("nom_client", "date_commande")
 
 
 # class ImagesProduitInline(admin.TabularInline):

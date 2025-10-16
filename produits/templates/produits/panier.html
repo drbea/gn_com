@@ -1,55 +1,119 @@
 {% extends "base.html" %}
-
 {% load static %}
-
-{% block title %}Mon Panier {% endblock %}
+{% block title %}Mon Panier{% endblock %}
 {% block content %}
+<h2>Panier Utilisateur</h2>
+<div class="container">
+  <table class="table">
+    <thead class="table-light">
+      <tr>
+        <th>Nom</th>
+        <th>Prix</th>
+        <th>Quantité</th>
+        <th>Action</th>
+        <th>Total</th>
+      </tr>
+    </thead>
+    <tbody id="panier-table-body">
+      <!-- Le contenu sera généré dynamiquement par JavaScript -->
+    </tbody>
+  </table>
+  <div class="text-end">
+    <p>Total général: <span id="total-general">0</span> GNF</p>
+  </div>
+<button id="valider-panier" class="btn btn-primary">Valider le panier</button>
 
- <h2>Panier Utiisateur</h2>
- <div class="container">
+</div>
+{% endblock %}
 
+{% block js %}
+<script>
+  // Récupérer le panier depuis localStorage
+  let panier = JSON.parse(localStorage.getItem("panier")) || [];
+  let tbody = document.querySelector("#panier-table-body");
+  let totalGeneral = 0;
 
-<table class="table">
-  <thead class="table-light">
-    <th>Nom</th>
-    <th>Prix</th>
-    <th>Qte</th>
-    <th>action</th>
-    <th>Total</th>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Toyota R450</td>
-      <td>234543</td>
-      <td>12</td>
-      <td>
-        <span class="bg-success w-50 me-5">+</span>
-        <span class="bg-danger ms-2 ">-</span>
-      </td>
-      <td>234578976</td>
+  // Fonction pour afficher le panier
+  function afficherPanier() {
+    tbody.innerHTML = "";
+    totalGeneral = 0;
 
-    </tr>
+    panier.forEach((article, index) => {
+      let totalArticle = article.prix * article.quantite;
+      totalGeneral += totalArticle;
 
-  </tbody>
-</table>
- </div>
+      let row = `
+        <tr>
+          <td>${article.nom}</td>
+          <td>${article.prix}</td>
+          <td>${article.quantite}</td>
+          <td>
+            <button class="btn btn-sm btn-danger" onclick="supprimerArticle(${index})">Supprimer</button>
+          </td>
+          <td>${totalArticle}</td>
+        </tr>
+      `;
+      tbody.innerHTML += row;
+    });
+
+    document.querySelector("#total-general").textContent = totalGeneral;
+  }
+
+  // Fonction pour supprimer un article
+  function supprimerArticle(index) {
+    panier.splice(index, 1);
+    localStorage.setItem("panier", JSON.stringify(panier));
+    afficherPanier();
+  }
+
+  // Afficher le panier au chargement de la page
+  afficherPanier();
+</script>
 
 <script>
-  let panier = JSON.parse(localStorage.getItem("panier"))
+    panier = JSON.parse(localStorage.getItem("panier")) || [];
+    let span = document.querySelector("#quantiteArticle")
+    console.log(span)
 
-  console.log("contenu panier:" + panier)
+    if (panier){
+      span.innerText = panier.length
+    }
+    </script>
+
+
+
+
+
+<script>
+  document.querySelector("#valider-panier").addEventListener("click", () => {
+    fetch("/produits/enregistrer-panier/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": "{{ csrf_token }}"
+      },
+      body: JSON.stringify({
+        nom_client: prompt("entrer le nom du client"),
+        panier: panier,
+        total: totalGeneral
+      })
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        alert("Commande enregistrée avec succès !");
+        localStorage.removeItem("panier");
+        localStorage.clear()
+        afficherPanier();
+      } else {
+        alert("Erreur: " + data.error);
+      }
+    })
+    .catch(error => {
+      console.error("Erreur:", error);
+      alert("Une erreur est survenue.");
+    });
+  });
 </script>
 
 {% endblock %}
-
-    {% block js  %}
-    <script>
-      panier = JSON.parse(localStorage.getItem("panier")) || [];
-      let span = document.querySelector("#quantiteArticle")
-      console.log(span)
-
-      if (panier){
-        span.innerText = panier.length
-      }
-    </script>
-    {% endblock %}

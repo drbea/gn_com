@@ -53,6 +53,21 @@ class ImagesArticle(models.Model):
     def __str__(self):
         return f"Image pour {self.article}"
 
+class Commande(models.Model):
+    date_commande = models.DateTimeField(auto_now_add=True)
+    total = models.DecimalField(max_digits=15, decimal_places=2)
+    nom_client = models.CharField(max_length = 100, blank = True, null = True)
+    def __str__(self):
+        return f"Commande {self.id} - {self.date_commande}"
+
+class ArticleCommande(models.Model):
+    commande = models.ForeignKey(Commande, on_delete=models.CASCADE)
+    article = models.ForeignKey(Article, on_delete=models.CASCADE)
+    quantite = models.PositiveIntegerField()
+    prix_unitaire = models.DecimalField(max_digits=15, decimal_places=2)
+
+    def __str__(self):
+        return f"{self.article.nom} x {self.quantite}"
 
 #
 # class ImagesProduit(models.Model):
